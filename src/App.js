@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+import Form from './components/Form';
 import './App.css';
+import React, { useState } from 'react';
+import Display from './components/Display';
 
 function App() {
+  const [content, setContent] = useState([])
+  const addContent = (task) => {
+    var newArr = [...content]
+    var isIn = false
+    for (var i = 0; i <newArr.length; i++){
+      if (newArr[i] === task){
+        isIn = true
+      }
+    }
+    if (isIn === true){
+      alert("Tasks must be unique")
+    } else{
+      newArr = [...content, task]
+      setContent(newArr)
+    }
+  }
+  const deleteContent = (task) => {
+    console.log(task)
+    const newArr = [...content].filter(tasks => task !== tasks)
+    setContent(newArr)
+  }
+
+  console.log({content})
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form setContent = {addContent}/>
+      <Display content = {content} deleteContent = {deleteContent}/>
     </div>
   );
 }
